@@ -1010,6 +1010,7 @@ stack_effect(int opcode, int oparg, int jump)
             return 2;
 
         /* Unary operators */
+        case INCREMENT:
         case UNARY_POSITIVE:
         case UNARY_NEGATIVE:
         case UNARY_NOT:
@@ -3680,6 +3681,8 @@ unaryop(unaryop_ty op)
         return UNARY_NOT;
     case UAdd:
         return UNARY_POSITIVE;
+    case UAdd2:
+        return INCREMENT;
     case USub:
         return UNARY_NEGATIVE;
     default:

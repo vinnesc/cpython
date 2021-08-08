@@ -63,6 +63,7 @@ def_op('ROT_FOUR', 6)
 
 def_op('NOP', 9)
 def_op('UNARY_POSITIVE', 10)
+def_op('INCREMENT', 44)
 def_op('UNARY_NEGATIVE', 11)
 def_op('UNARY_NOT', 12)
 

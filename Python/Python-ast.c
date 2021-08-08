@@ -150,7 +150,9 @@ void _PyAST_Fini(PyInterpreterState *interp)
     Py_CLEAR(state->Tuple_type);
     Py_CLEAR(state->TypeIgnore_type);
     Py_CLEAR(state->UAdd_singleton);
+    Py_CLEAR(state->UAdd2_singleton);
     Py_CLEAR(state->UAdd_type);
+    Py_CLEAR(state->UAdd2_type);
     Py_CLEAR(state->USub_singleton);
     Py_CLEAR(state->USub_type);
     Py_CLEAR(state->UnaryOp_type);
@@ -1614,6 +1616,12 @@ init_types(struct ast_state *state)
     state->UAdd_singleton = PyType_GenericNew((PyTypeObject *)state->UAdd_type,
                                               NULL, NULL);
     if (!state->UAdd_singleton) return 0;
+    state->UAdd2_type = make_type(state, "UAdd2", state->unaryop_type, NULL, 0,
+        "UAdd2");
+    if (!state->UAdd2_type) return 0;
+    state->UAdd2_singleton = PyType_GenericNew((PyTypeObject *)state->UAdd2_type,
+                                              NULL, NULL);
+    if (!state->UAdd2_singleton) return 0;
     state->USub_type = make_type(state, "USub", state->unaryop_type, NULL, 0,
         "USub");
     if (!state->USub_type) return 0;
@@ -4735,6 +4743,9 @@ PyObject* ast2obj_unaryop(struct ast_state *state, unaryop_ty o)
         case USub:
             Py_INCREF(state->USub_singleton);
             return state->USub_singleton;
+        case UAdd2:
+            Py_INCREF(state->UAdd2_singleton);
+            return state->UAdd2_singleton;
     }
     Py_UNREACHABLE();
 }

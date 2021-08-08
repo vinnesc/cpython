@@ -43,7 +43,7 @@ static void *opcode_targets[256] = {
     &&TARGET_LOAD_GLOBAL_ADAPTIVE,
     &&TARGET_LOAD_GLOBAL_MODULE,
     &&TARGET_LOAD_GLOBAL_BUILTIN,
-    &&_unknown_opcode,
+    &&TARGET_INCREMENT,
     &&_unknown_opcode,
     &&_unknown_opcode,
     &&_unknown_opcode,

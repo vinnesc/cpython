@@ -1369,6 +1369,12 @@ PyNumber_Positive(PyObject *o)
 }
 
 PyObject *
+PyNumber_Increment(PyObject *o)
+{
+    return PyNumber_Add(o, PyLong_FromLong(1L)); 
+}
+
+PyObject *
 PyNumber_Invert(PyObject *o)
 {
     if (o == NULL) {

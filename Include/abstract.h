@@ -477,6 +477,8 @@ PyAPI_FUNC(PyObject *) PyNumber_Negative(PyObject *o);
    This is the equivalent of the Python expression: +o. */
 PyAPI_FUNC(PyObject *) PyNumber_Positive(PyObject *o);
 
+PyAPI_FUNC(PyObject *) PyNumber_Increment(PyObject *o);
+
 /* Returns the absolute value of 'o', or NULL on failure.
 
    This is the equivalent of the Python expression: abs(o). */

@@ -1321,11 +1321,12 @@ class _Unparser(NodeVisitor):
         with self.require_parens(_Precedence.TUPLE, node):
             self.items_view(self.traverse, node.elts)
 
-    unop = {"Invert": "~", "Not": "not", "UAdd": "+", "USub": "-"}
+    unop = {"Invert": "~", "Not": "not", "UAdd": "+", "USub": "-", "UAdd2": "++"}
     unop_precedence = {
         "not": _Precedence.NOT,
         "~": _Precedence.FACTOR,
         "+": _Precedence.FACTOR,
+        "++": _Precedence.FACTOR,
         "-": _Precedence.FACTOR,
     }
 

@@ -135,6 +135,8 @@ struct ast_state {
     PyObject *Try_type;
     PyObject *Tuple_type;
     PyObject *TypeIgnore_type;
+    PyObject *UAdd2_singleton;
+    PyObject *UAdd2_type;
     PyObject *UAdd_singleton;
     PyObject *UAdd_type;
     PyObject *USub_singleton;

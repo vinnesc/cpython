@@ -1745,6 +1745,16 @@ _PyEval_EvalFrameDefault(PyThreadState *tstate, InterpreterFrame *frame, int thr
             DISPATCH();
         }
 
+        case TARGET(INCREMENT): {
+            PyObject *value = TOP();
+            PyObject *res = PyNumber_Increment(value);
+            Py_DECREF(value);
+            SET_TOP(res);
+            if (res == NULL)
+                goto error;
+            DISPATCH();
+        }
+
         case TARGET(UNARY_NEGATIVE): {
             PyObject *value = TOP();
             PyObject *res = PyNumber_Negative(value);

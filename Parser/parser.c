@@ -12387,7 +12387,7 @@ term_raw(Parser *p)
     return _res;
 }
 
-// factor: '+' factor | '-' factor | '~' factor | power
+// factor: '+' factor | '++' factor | '-' factor | '~' factor | power
 static expr_ty
 factor_rule(Parser *p)
 {
@@ -12446,6 +12446,42 @@ factor_rule(Parser *p)
         p->mark = _mark;
         D(fprintf(stderr, "%*c%s factor[%d-%d]: %s failed!\n", p->level, ' ',
                   p->error_indicator ? "ERROR!" : "-", _mark, p->mark, "'+' factor"));
+    }
+    { // '++' factor
+        if (p->error_indicator) {
+            D(p->level--);
+            return NULL;
+        }
+        D(fprintf(stderr, "%*c> factor[%d-%d]: %s\n", p->level, ' ', _mark, p->mark, "'++' factor"));
+        Token * _literal;
+        expr_ty a;
+        if (
+            (_literal = _PyPegen_expect_token(p, 54))  // token='++'
+            &&
+            (a = factor_rule(p))  // factor
+        )
+        {
+            D(fprintf(stderr, "%*c+ factor[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'++' factor"));
+            Token *_token = _PyPegen_get_last_nonnwhitespace_token(p);
+            if (_token == NULL) {
+                D(p->level--);
+                return NULL;
+            }
+            int _end_lineno = _token->end_lineno;
+            UNUSED(_end_lineno); // Only used by EXTRA macro
+            int _end_col_offset = _token->end_col_offset;
+            UNUSED(_end_col_offset); // Only used by EXTRA macro
+            _res = _PyAST_UnaryOp ( UAdd2 , a , EXTRA );
+            if (_res == NULL && PyErr_Occurred()) {
+                p->error_indicator = 1;
+                D(p->level--);
+                return NULL;
+            }
+            goto done;
+        }
+        p->mark = _mark;
+        D(fprintf(stderr, "%*c%s factor[%d-%d]: %s failed!\n", p->level, ' ',
+                  p->error_indicator ? "ERROR!" : "-", _mark, p->mark, "'++' factor"));
     }
     { // '-' factor
         if (p->error_indicator) {
